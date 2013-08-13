@@ -10,12 +10,9 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
-import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
@@ -188,7 +185,7 @@ public class TwitterTask {
      */
     public void getTopRetweet() {
 
-        if (items.count() > 0) {
+        if (items.count() <= 0) {
             getTweetByQuery(false);
         }
 
@@ -211,7 +208,7 @@ public class TwitterTask {
      */
     public void getTopfollowed() {
 
-        if (items.count() > 0) {
+        if (items.count() <= 0) {
             getTweetByQuery(false);
         }
 
@@ -233,7 +230,7 @@ public class TwitterTask {
      */
     public void getTopMentioned() {
 
-        if (items.count() > 0) {
+        if (items.count() <= 0) {
             getTweetByQuery(false);
         }
 
@@ -241,7 +238,7 @@ public class TwitterTask {
         query.put("tweet_mentioned_count", -1);
         DBCursor cursor = items.find().sort(query).limit(10);
 
-        if (cursor.length() > 0) {
+        if (cursor.count() > 0) {
             while (cursor.hasNext()) {
                 System.out.println(cursor.next());
             }
